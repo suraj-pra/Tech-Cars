@@ -1,0 +1,787 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package User;
+
+import Both.Pane;
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author admin
+ */
+public class Model extends javax.swing.JFrame {
+
+    /**
+     * Creates new form Model1
+     */
+    
+    data.data dt = new data.data();
+    java.sql.Statement stmt;
+    
+    UserHome u;
+    Desc d = new Desc(this);
+    String trans1 = "";
+    String oil1 = "";
+        
+    public Model(UserHome u) {
+        this.u = u;
+        initComponents();
+    }
+
+    private Model() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public String readUsingFiles(String fileName) throws java.io.IOException {
+        java.nio.file.Path path = java.nio.file.Paths.get(fileName);
+        byte[] bytes = java.nio.file.Files.readAllBytes(path);
+        @SuppressWarnings("unused")
+                java.util.List<String> allLines = java.nio.file.Files.readAllLines(path, java.nio.charset.StandardCharsets.UTF_8);
+        return (new String(bytes));
+    }
+    
+    public void set (int i) {
+        javax.swing.JLabel pic[] = {pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9, pic10};
+        javax.swing.JLabel name[] = {name1, name2, name3, name4, name5, name6, name7, name8, name9, name10};
+        javax.swing.JLabel pr[] = {pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10};
+        try{
+            String query = "Select transmission, oil_type from " + brand.getSelectedItem() +" where submodel = \"" + name[i].getText() + "\";";
+            java.sql.ResultSet rs = stmt.executeQuery(query);
+            rs.first();
+
+            d.trans.setText(rs.getString("transmission"));
+            d.oil.setText(rs.getString("oil_type"));
+            d.fname.setText(fname.getText());
+            d.id.setText(id.getText());
+            d.name.setText(name[i].getText());
+            d.pr.setText(pr[i].getText());
+            d.pic.setIcon(pic[i].getIcon());
+            d.path.setText(brand.getSelectedItem() + " > " + model.getSelectedItem() + " >");
+            d.stmt = stmt;
+            String fileName = "D:\\Path\\" + brand.getSelectedItem() + "\\" + model.getSelectedItem() + "\\" + name[i].getText() + ".txt";
+            d.desc.setText(readUsingFiles(fileName));
+            d.setVisible(true);
+            this.setVisible(false);
+        }
+        catch (Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    public void setImg (int bno) {
+        try{
+            if(model.getSelectedIndex() > 0){
+                try {
+                    String query = "";
+                    if (bno == 0)
+                        query = "Select submodel, price from " + brand.getSelectedItem() +" where model = \""+model.getSelectedItem()+"\";";
+                    if (bno == 1){
+                        if (AT.isSelected())
+                            trans1 = "Automatic";
+                        if (MN.isSelected())
+                            trans1 = "Manual";
+                        if (D.isSelected())
+                            oil1 = "Diesel";
+                        if (P.isSelected())
+                            oil1 = "Petrol";
+                        query = "Select submodel, price from " + brand.getSelectedItem() +" where model = \""+model.getSelectedItem()+"\" and transmission = \""+ trans1 +"\" and oil_type = \""+ oil1 +"\" ;";
+                    }
+                    
+                    int n = dt.method(u, this, query, (String) brand.getSelectedItem(), (String) model.getSelectedItem());
+                    
+                    if (n == -1)
+                        new SPane(this).setVisible(true);
+                }
+                catch (Exception e){
+                    JOptionPane.showMessageDialog(null, e);
+                }
+            }
+            else if(brand.getSelectedIndex() == 0){
+                Pane p = new Pane(this);
+                p.txt.setText("First select a Brand.");
+                p.yes.setVisible(false);
+                p.no.setVisible(false);
+                p.setVisible(true);
+            }
+            else if(brand.getSelectedIndex() > 0 && model.getSelectedIndex() == 0){
+                Pane p = new Pane(this);
+                p.txt.setText("First select a Model.");
+                p.yes.setVisible(false);
+                p.no.setVisible(false);
+                p.setVisible(true);
+            }
+        }
+        catch (Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        bg1 = new javax.swing.ButtonGroup();
+        bg2 = new javax.swing.ButtonGroup();
+        back = new javax.swing.JLabel();
+        minimize = new javax.swing.JLabel();
+        exit = new javax.swing.JLabel();
+        blk = new javax.swing.JLabel();
+        srch = new javax.swing.JLabel();
+        icon = new javax.swing.JLabel();
+        fname = new javax.swing.JLabel();
+        id = new javax.swing.JLabel();
+        brand = new javax.swing.JComboBox<>();
+        model = new javax.swing.JComboBox<>();
+        trans = new javax.swing.JLabel();
+        oil = new javax.swing.JLabel();
+        smsg = new javax.swing.JLabel();
+        spanel = new javax.swing.JScrollPane();
+        mpanel = new javax.swing.JPanel();
+        pic1 = new javax.swing.JLabel();
+        name1 = new javax.swing.JLabel();
+        pr1 = new javax.swing.JLabel();
+        b1 = new javax.swing.JButton();
+        pic2 = new javax.swing.JLabel();
+        name2 = new javax.swing.JLabel();
+        pr2 = new javax.swing.JLabel();
+        b2 = new javax.swing.JButton();
+        pic3 = new javax.swing.JLabel();
+        name3 = new javax.swing.JLabel();
+        pr3 = new javax.swing.JLabel();
+        b3 = new javax.swing.JButton();
+        pic4 = new javax.swing.JLabel();
+        name4 = new javax.swing.JLabel();
+        pr4 = new javax.swing.JLabel();
+        b4 = new javax.swing.JButton();
+        pic5 = new javax.swing.JLabel();
+        name5 = new javax.swing.JLabel();
+        pr5 = new javax.swing.JLabel();
+        b5 = new javax.swing.JButton();
+        pic6 = new javax.swing.JLabel();
+        name6 = new javax.swing.JLabel();
+        pr6 = new javax.swing.JLabel();
+        b6 = new javax.swing.JButton();
+        pic7 = new javax.swing.JLabel();
+        name7 = new javax.swing.JLabel();
+        pr7 = new javax.swing.JLabel();
+        b7 = new javax.swing.JButton();
+        pic8 = new javax.swing.JLabel();
+        name8 = new javax.swing.JLabel();
+        pr8 = new javax.swing.JLabel();
+        b8 = new javax.swing.JButton();
+        pic9 = new javax.swing.JLabel();
+        name9 = new javax.swing.JLabel();
+        pr9 = new javax.swing.JLabel();
+        b9 = new javax.swing.JButton();
+        pic10 = new javax.swing.JLabel();
+        name10 = new javax.swing.JLabel();
+        pr10 = new javax.swing.JLabel();
+        b10 = new javax.swing.JButton();
+        pbck = new javax.swing.JLabel();
+        pbck1 = new javax.swing.JLabel();
+        panel = new javax.swing.JPanel();
+        AT = new javax.swing.JRadioButton();
+        MN = new javax.swing.JRadioButton();
+        D = new javax.swing.JRadioButton();
+        P = new javax.swing.JRadioButton();
+        sprt = new javax.swing.JSeparator();
+        apply = new javax.swing.JButton();
+        bck = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1079, 609));
+        setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/back btn.png"))); // NOI18N
+        back.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backMouseClicked(evt);
+            }
+        });
+        getContentPane().add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 30, 40));
+
+        minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/min.png"))); // NOI18N
+        minimize.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minimizeMouseClicked(evt);
+            }
+        });
+        getContentPane().add(minimize, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 0, 30, 40));
+
+        exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exit.png"))); // NOI18N
+        exit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                exitMouseClicked(evt);
+            }
+        });
+        getContentPane().add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 0, 30, 40));
+
+        blk.setBackground(new java.awt.Color(0, 0, 0));
+        blk.setOpaque(true);
+        getContentPane().add(blk, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 40));
+
+        srch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/srch.png"))); // NOI18N
+        srch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                srchMouseClicked(evt);
+            }
+        });
+        getContentPane().add(srch, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 60, -1, 50));
+
+        icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon.jpg"))); // NOI18N
+        getContentPane().add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 60, 30, 30));
+
+        fname.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        fname.setText("Login");
+        fname.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                fnameMouseClicked(evt);
+            }
+        });
+        getContentPane().add(fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 40, 160, 60));
+
+        id.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        id.setForeground(new java.awt.Color(51, 0, 51));
+        getContentPane().add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 110, 210, 20));
+
+        brand.setFont(new java.awt.Font("Consolas", 0, 11)); // NOI18N
+        brand.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Select Brand>" }));
+        brand.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                brandItemStateChanged(evt);
+            }
+        });
+        getContentPane().add(brand, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 240, 30));
+
+        model.setFont(new java.awt.Font("Consolas", 0, 11)); // NOI18N
+        model.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Select Model>" }));
+        getContentPane().add(model, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, 240, 30));
+
+        trans.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
+        getContentPane().add(trans, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 170, 30));
+
+        oil.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
+        getContentPane().add(oil, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, 180, 30));
+
+        smsg.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
+        getContentPane().add(smsg, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 104, 90, 40));
+
+        mpanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        mpanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        mpanel.setOpaque(false);
+        mpanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        pic1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mpanel.add(pic1, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 11, 290, 169));
+
+        name1.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
+        mpanel.add(name1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 360, 31));
+
+        pr1.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
+        mpanel.add(pr1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 170, 19));
+
+        b1.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        b1.setText("Check Details");
+        b1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b1ActionPerformed(evt);
+            }
+        });
+        mpanel.add(b1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, -1));
+
+        pic2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mpanel.add(pic2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 10, 310, 169));
+
+        name2.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
+        mpanel.add(name2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 360, 31));
+
+        pr2.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
+        mpanel.add(pr2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 230, 170, 19));
+
+        b2.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        b2.setText("Check Details");
+        b2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b2ActionPerformed(evt);
+            }
+        });
+        mpanel.add(b2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 260, -1, -1));
+
+        pic3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mpanel.add(pic3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 290, 169));
+
+        name3.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
+        mpanel.add(name3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 360, 31));
+
+        pr3.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
+        mpanel.add(pr3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 540, 170, 19));
+
+        b3.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        b3.setText("Check Details");
+        b3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b3ActionPerformed(evt);
+            }
+        });
+        mpanel.add(b3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 570, -1, -1));
+
+        pic4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mpanel.add(pic4, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 320, 310, 169));
+
+        name4.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
+        mpanel.add(name4, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 500, 360, 31));
+
+        pr4.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
+        mpanel.add(pr4, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 540, 170, 19));
+
+        b4.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        b4.setText("Check Details");
+        b4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b4ActionPerformed(evt);
+            }
+        });
+        mpanel.add(b4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 570, -1, -1));
+
+        pic5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mpanel.add(pic5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 630, 310, 169));
+
+        name5.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
+        mpanel.add(name5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 810, 360, 31));
+
+        pr5.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
+        mpanel.add(pr5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 850, 170, 19));
+
+        b5.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        b5.setText("Check Details");
+        b5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b5ActionPerformed(evt);
+            }
+        });
+        mpanel.add(b5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 880, -1, -1));
+
+        pic6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mpanel.add(pic6, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 630, 290, 169));
+
+        name6.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
+        mpanel.add(name6, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 810, 360, 31));
+
+        pr6.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
+        mpanel.add(pr6, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 850, 170, 19));
+
+        b6.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        b6.setText("Check Details");
+        b6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b6ActionPerformed(evt);
+            }
+        });
+        mpanel.add(b6, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 880, -1, -1));
+
+        pic7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mpanel.add(pic7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 930, 310, 169));
+
+        name7.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
+        mpanel.add(name7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 1110, 360, 31));
+
+        pr7.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
+        mpanel.add(pr7, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 1150, 170, 19));
+
+        b7.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        b7.setText("Check Details");
+        b7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b7ActionPerformed(evt);
+            }
+        });
+        mpanel.add(b7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 1180, -1, -1));
+
+        pic8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mpanel.add(pic8, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 930, 290, 169));
+
+        name8.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
+        mpanel.add(name8, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 1110, 360, 31));
+
+        pr8.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
+        mpanel.add(pr8, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 1150, 170, 19));
+
+        b8.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        b8.setText("Check Details");
+        b8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b8ActionPerformed(evt);
+            }
+        });
+        mpanel.add(b8, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 1180, -1, -1));
+
+        pic9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mpanel.add(pic9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 1240, 310, 169));
+
+        name9.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
+        mpanel.add(name9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 1420, 360, 31));
+
+        pr9.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
+        mpanel.add(pr9, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 1460, 170, 19));
+
+        b9.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        b9.setText("Check Details");
+        b9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b9ActionPerformed(evt);
+            }
+        });
+        mpanel.add(b9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 1490, -1, -1));
+
+        pic10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mpanel.add(pic10, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 1240, 310, 169));
+
+        name10.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
+        mpanel.add(name10, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 1420, 360, 31));
+
+        pr10.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
+        mpanel.add(pr10, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 1460, 170, 19));
+
+        b10.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        b10.setText("Check Details");
+        b10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b10ActionPerformed(evt);
+            }
+        });
+        mpanel.add(b10, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 1490, -1, -1));
+
+        pbck.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pnlbck.jpg"))); // NOI18N
+        mpanel.add(pbck, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 760, 940));
+
+        pbck1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pnlbck.jpg"))); // NOI18N
+        mpanel.add(pbck1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 930, 760, 1000));
+
+        spanel.setViewportView(mpanel);
+
+        getContentPane().add(spanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 790, 420));
+
+        panel.setBorder(javax.swing.BorderFactory.createTitledBorder("Select what you want"));
+        panel.setFont(new java.awt.Font("Consolas", 0, 11)); // NOI18N
+        panel.setOpaque(false);
+
+        bg1.add(AT);
+        AT.setFont(new java.awt.Font("Consolas", 0, 11)); // NOI18N
+        AT.setText("Automatic");
+        AT.setOpaque(false);
+
+        bg1.add(MN);
+        MN.setFont(new java.awt.Font("Consolas", 0, 11)); // NOI18N
+        MN.setText("Manual");
+        MN.setOpaque(false);
+
+        bg2.add(D);
+        D.setFont(new java.awt.Font("Consolas", 0, 11)); // NOI18N
+        D.setText("Diesel");
+        D.setOpaque(false);
+
+        bg2.add(P);
+        P.setFont(new java.awt.Font("Consolas", 0, 11)); // NOI18N
+        P.setText("Petrol");
+        P.setOpaque(false);
+
+        apply.setFont(new java.awt.Font("Consolas", 0, 11)); // NOI18N
+        apply.setText("Apply");
+        apply.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                applyActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
+        panel.setLayout(panelLayout);
+        panelLayout.setHorizontalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(sprt)
+            .addGroup(panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(P, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(MN, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(AT)
+                            .addComponent(D))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(panelLayout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(apply, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+        panelLayout.setVerticalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(AT)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(MN)
+                .addGap(9, 9, 9)
+                .addComponent(sprt, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(D)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(P)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(apply))
+        );
+
+        getContentPane().add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 210, -1, -1));
+
+        bck.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/altbck.jpg"))); // NOI18N
+        getContentPane().add(bck, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 610));
+
+        pack();
+        setLocationRelativeTo(null);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        spanel.getVerticalScrollBar().setUnitIncrement(16);
+    }//GEN-LAST:event_formWindowOpened
+
+    private void srchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_srchMouseClicked
+        spanel.getVerticalScrollBar().setValue(0);
+        setImg(0);
+        smsg.setText("");
+        trans.setText("");
+        oil.setText("");
+        bg1.clearSelection();
+        bg2.clearSelection();
+    }//GEN-LAST:event_srchMouseClicked
+
+    private void brandItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_brandItemStateChanged
+        model.removeAllItems();
+        model.addItem("<Select Model>");
+        if(brand.getSelectedIndex() > 0){
+            try {
+                String query = "Select distinct model from " + brand.getSelectedItem() +";";
+                java.sql.ResultSet rs = stmt.executeQuery(query);
+
+                while(rs.next()){
+                    model.addItem(rs.getString("model"));
+                }
+            }
+            catch (Exception e){
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }//GEN-LAST:event_brandItemStateChanged
+
+    private void applyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyActionPerformed
+        spanel.getVerticalScrollBar().setValue(0);
+        setImg(1);
+        smsg.setText("Cars with:");
+        trans.setText(trans1);
+        oil.setText(oil1);
+    }//GEN-LAST:event_applyActionPerformed
+
+    private void fnameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fnameMouseClicked
+        if(!id.getText().equals("")){
+            try {
+                UserAccount uacc = new UserAccount(id.getText(), 2, null, this, null);
+
+                uacc.stmt = stmt;
+                uacc.setVisible(true);
+                this.setVisible(false);
+            }
+            catch (Exception e){
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+        else {
+            Both.Login lg = new Both.Login(2, null, this, null);
+            lg.setVisible(true);
+            lg.custadm.setVisible(false);
+            lg.idlb.setText("UserID:");
+            lg.code = "User";
+            lg.ch = 'u';
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_fnameMouseClicked
+
+    private void b1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b1ActionPerformed
+        set(0);
+    }//GEN-LAST:event_b1ActionPerformed
+
+    private void b2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b2ActionPerformed
+        set(1);
+    }//GEN-LAST:event_b2ActionPerformed
+
+    private void b3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b3ActionPerformed
+        set(2);
+    }//GEN-LAST:event_b3ActionPerformed
+
+    private void b4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b4ActionPerformed
+        set(3);
+    }//GEN-LAST:event_b4ActionPerformed
+
+    private void b5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b5ActionPerformed
+        set(4);
+    }//GEN-LAST:event_b5ActionPerformed
+
+    private void b6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b6ActionPerformed
+        set(5);
+    }//GEN-LAST:event_b6ActionPerformed
+
+    private void b7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b7ActionPerformed
+        set(6);
+    }//GEN-LAST:event_b7ActionPerformed
+
+    private void b8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b8ActionPerformed
+        set(7);
+    }//GEN-LAST:event_b8ActionPerformed
+
+    private void b9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b9ActionPerformed
+        set(8);
+    }//GEN-LAST:event_b9ActionPerformed
+
+    private void b10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b10ActionPerformed
+        set(9);
+    }//GEN-LAST:event_b10ActionPerformed
+
+    private void backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backMouseClicked
+        u.brand.setSelectedIndex(brand.getSelectedIndex());
+        u.model.setSelectedIndex(model.getSelectedIndex());
+        u.fname.setText(fname.getText());
+        u.id.setText(id.getText());
+        u.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_backMouseClicked
+
+    private void minimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeMouseClicked
+        this.setVisible(false);
+        new Both.Max(this).setVisible(true);
+    }//GEN-LAST:event_minimizeMouseClicked
+
+    private void exitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_exitMouseClicked
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Model.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Model.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Model.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Model.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Model().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton AT;
+    private javax.swing.JRadioButton D;
+    private javax.swing.JRadioButton MN;
+    private javax.swing.JRadioButton P;
+    private javax.swing.JButton apply;
+    public javax.swing.JButton b1;
+    public javax.swing.JButton b10;
+    public javax.swing.JButton b2;
+    public javax.swing.JButton b3;
+    public javax.swing.JButton b4;
+    public javax.swing.JButton b5;
+    public javax.swing.JButton b6;
+    public javax.swing.JButton b7;
+    public javax.swing.JButton b8;
+    public javax.swing.JButton b9;
+    private javax.swing.JLabel back;
+    private javax.swing.JLabel bck;
+    private javax.swing.ButtonGroup bg1;
+    private javax.swing.ButtonGroup bg2;
+    private javax.swing.JLabel blk;
+    public javax.swing.JComboBox<String> brand;
+    private javax.swing.JLabel exit;
+    public javax.swing.JLabel fname;
+    private javax.swing.JLabel icon;
+    public javax.swing.JLabel id;
+    private javax.swing.JLabel minimize;
+    public javax.swing.JComboBox<String> model;
+    private javax.swing.JPanel mpanel;
+    public javax.swing.JLabel name1;
+    public javax.swing.JLabel name10;
+    public javax.swing.JLabel name2;
+    public javax.swing.JLabel name3;
+    public javax.swing.JLabel name4;
+    public javax.swing.JLabel name5;
+    public javax.swing.JLabel name6;
+    public javax.swing.JLabel name7;
+    public javax.swing.JLabel name8;
+    public javax.swing.JLabel name9;
+    public javax.swing.JLabel oil;
+    private javax.swing.JPanel panel;
+    private javax.swing.JLabel pbck;
+    private javax.swing.JLabel pbck1;
+    public javax.swing.JLabel pic1;
+    public javax.swing.JLabel pic10;
+    public javax.swing.JLabel pic2;
+    public javax.swing.JLabel pic3;
+    public javax.swing.JLabel pic4;
+    public javax.swing.JLabel pic5;
+    public javax.swing.JLabel pic6;
+    public javax.swing.JLabel pic7;
+    public javax.swing.JLabel pic8;
+    public javax.swing.JLabel pic9;
+    public javax.swing.JLabel pr1;
+    public javax.swing.JLabel pr10;
+    public javax.swing.JLabel pr2;
+    public javax.swing.JLabel pr3;
+    public javax.swing.JLabel pr4;
+    public javax.swing.JLabel pr5;
+    public javax.swing.JLabel pr6;
+    public javax.swing.JLabel pr7;
+    public javax.swing.JLabel pr8;
+    public javax.swing.JLabel pr9;
+    private javax.swing.JLabel smsg;
+    private javax.swing.JScrollPane spanel;
+    private javax.swing.JSeparator sprt;
+    private javax.swing.JLabel srch;
+    public javax.swing.JLabel trans;
+    // End of variables declaration//GEN-END:variables
+}

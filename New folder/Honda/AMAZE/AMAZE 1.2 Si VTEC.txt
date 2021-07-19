@@ -1,0 +1,6 @@
+* Driver side airbag
+* 3-Point seat belts
+* Manual HVAC
+* Auto door locks
+* Tilt steering
+* Rear fog lamps

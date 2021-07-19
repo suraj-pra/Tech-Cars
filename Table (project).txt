@@ -1,0 +1,4 @@
+create table user(u_id varchar(50) primary key, pwd varchar(20), fname varchar(20), lname varchar(20), gender char(1), DOB date);
+create table admin(a_id varchar(50) primary key, pwd varchar(20), fname varchar(20), lname varchar(20), gender char(1), DOB date);
+create table game(u_id varchar(50) primary key, sapple int(20) default 0, sbird int(20) default 0, segg int(20) default 0, stotal int(20) default 0, ded int(20) default 0, added int(20) default 0);
+create table history(b_no int(20) primary key, u_id varchar(50), u_name varchar(50), time varchar(50), car char(5), cname varchar(50), prc int(15), rating int(1), paid varchar(3));
